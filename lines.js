@@ -13,11 +13,12 @@ const LINES = [
   { id: "8910", name: "Rent", hints: ["coworking space membership", "studio rent", "office rent", "WeWork"] },
   { id: "8960", name: "Repairs and maintenance", hints: ["laptop repair", "equipment repair", "camera servicing"] },
   { id: "9200", name: "Travel expenses", hints: ["Air Canada flight", "WestJet airfare", "hotel stay", "Airbnb for conference", "VIA Rail train ticket", "taxi to airport"] },
-  { id: "9220", name: "Utilities", hints: ["Rogers internet", "Bell mobile phone bill", "Telus wireless", "Hydro electricity bill", "Enbridge gas bill"] },
+  { id: "9220", name: "Utilities", partial: true, hints: ["Rogers internet", "Bell mobile phone bill", "Telus wireless", "Hydro electricity bill", "Enbridge gas bill"] },
   { id: "9275", name: "Delivery, freight and express", hints: ["Canada Post parcel shipping", "Purolator courier", "UPS shipping label", "FedEx delivery"] },
-  { id: "9281", name: "Motor vehicle expenses", hints: ["gas station fuel Petro-Canada", "Esso Shell gas", "car insurance", "oil change", "407 ETR toll", "parking Green P", "car wash"] },
+  { id: "9281", name: "Motor vehicle expenses", partial: true, hints: ["gas station fuel Petro-Canada", "Esso Shell gas", "car insurance", "oil change", "407 ETR toll", "parking Green P", "car wash"] },
   { id: "9270", name: "Other expenses", hints: ["online course for work", "conference ticket", "stock photos", "music licence for videos"] },
   { id: "personal", name: "Personal (not deductible)", hints: ["grocery store Loblaws No Frills", "Netflix", "Spotify", "clothing store", "gym membership", "LCBO", "personal pharmacy Shoppers Drug Mart", "rent for my apartment"] },
-  { id: "income", name: "Income or transfer (skip)", hints: ["client payment received", "e-transfer from client", "deposit", "Stripe payout", "transfer from savings", "invoice paid"] }
+  { id: "transfer", name: "Not an expense (payment or transfer)", hints: ["credit card payment", "bill payment to Visa or Mastercard", "income tax instalment to CRA", "GST/HST remittance to Receiver General", "transfer to savings account", "loan payment", "cash withdrawal", "investment contribution RRSP TFSA"] },
+  { id: "income", name: "Income (skip)", hints: ["client payment received", "e-transfer from client", "deposit", "Stripe payout", "transfer from savings", "invoice paid"] }
 ];
 if (typeof module !== "undefined") module.exports = LINES;

@@ -41,6 +41,13 @@
       <div class="stat"><span>Learned from you</span><b id="sLearn">0</b></div>
       <div class="stat"><span>Deductible so far</span><b id="sDed">$0</b></div>
     </div>
+    <div class="tools">
+      <p id="signNote" class="signnote"></p>
+      <button type="button" class="btn small ghost" id="flip">Flip</button>
+      <label class="gst"><input type="checkbox" id="gst"> I'm registered for GST/HST</label>
+      <button type="button" class="linkbtn" id="forget">Forget my saved merchants</button>
+    </div>
+    <div class="undo" id="undoBar" hidden><span id="undoMsg"></span> <button type="button" class="btn small" id="undo">Undo</button></div>
     <div class="layout">
       <div class="txwrap">
         <div class="filters" role="group" aria-label="Show">
@@ -54,7 +61,9 @@
       <aside class="sum" aria-labelledby="h-sum">
         <h2 id="h-sum">Your T2125 expenses</h2>
         <table id="lines"></table>
-        <p class="note">Meals and entertainment count at 50%. Enter only the business part of anything you also use personally, and keep your receipts.</p>
+        <p class="warn" id="missing" hidden></p>
+        <p class="warn" id="gstWarn" hidden>You're registered for GST/HST, so the amounts on Form T2125 should leave out any GST/HST you claim back as input tax credits. These totals still include the tax you paid. Subtract your input tax credits before you use them.</p>
+        <p class="note">Meals and entertainment are generally limited to 50%. Utilities and vehicle costs only count for the business part, so enter your business-use percentage (from your logbook for a vehicle). Keep your receipts.</p>
         <div class="dl"><button type="button" class="btn small" id="dlSum">Download totals (CSV)</button> <button type="button" class="btn small ghost" id="dlTx">Download sorted transactions</button></div>
       </aside>
     </div>
@@ -65,8 +74,9 @@
     <summary>How it works, and what it won't do</summary>
     <div class="mbody">
       <p>Each T2125 expense line has a handful of example phrases, like "Google Ads" for advertising or "coworking space membership" for rent. When you load a statement, every description and every example is turned into a 384-number vector by <a href="https://huggingface.co/Xenova/all-MiniLM-L6-v2">all-MiniLM-L6-v2</a>, an open-weight sentence model, using <a href="https://github.com/huggingface/transformers.js">Transformers.js</a> in your browser. A transaction goes to the line whose examples it sits closest to. When you correct a row, that row becomes a new example for close matches, every row from the same merchant moves with it, and the merchant is remembered in this browser for next time. Store numbers and city names are stripped first, so "Marriott Montreal" isn't mistaken for a Montreal restaurant.</p>
-      <p>It doesn't know your business. A Staples run could be supplies or a new chair (a capital purchase, which goes under capital cost allowance instead), and a phone bill is usually only partly business. It doesn't split GST/HST or handle input tax credits, business-use-of-home, or capital cost allowance. Treat it as a first sort that you check, not a tax return.</p>
-      <p><b>Sources:</b> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/sole-proprietorships-partnerships/report-business-income-expenses/completing-form-t2125/expenses-section-form-t2125.html">CRA, Expenses section of Form T2125</a> (the line numbers) and <a href="https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4002/t4002-5.html">CRA Guide T4002, Chapter 3</a> (the 50% rule for meals and entertainment).</p>
+      <p>It doesn't know your business. A Staples run could be supplies or a new chair (a capital purchase, which goes under capital cost allowance instead), and a phone bill is usually only partly business. It doesn't work out input tax credits, business-use-of-home, or capital cost allowance. Card payments, tax instalments and transfers to savings are set aside as not an expense, and refunds come off the merchant's line. Treat it as a first sort that you check, not a tax return.</p>
+      <p>How well does it sort? On <a href="eval/">186 held-out transactions</a> it put 133 (72%) on the right line, against 92 (49%) for a plain keyword matcher. It flagged 85 rows for a look, and those flags caught 46 of its 53 mistakes. You can run that check yourself.</p>
+      <p><b>Sources:</b> <a href="https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/sole-proprietorships-partnerships/report-business-income-expenses/completing-form-t2125/expenses-section-form-t2125.html">CRA, Expenses section of Form T2125</a> (the line numbers) and <a href="https://www.canada.ca/en/revenue-agency/services/forms-publications/publications/t4002/t4002-5.html">CRA Guide T4002, Chapter 3</a> (the 50% limit on meals and entertainment, and business-use rules for vehicles).</p>
     </div>
   </details>
 </main>

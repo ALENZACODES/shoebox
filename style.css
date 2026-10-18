@@ -1,4 +1,5 @@
 :root{--navy:#011F5B;--red:#990000;--gold:#C9A227;--ink:#18202f;--muted:#4f586b;--line:#dfe3ea;--soft:#f6f7fa}
+[hidden]{display:none!important}
 *{box-sizing:border-box}
 body{margin:0;font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
 .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
@@ -55,5 +56,15 @@ table{width:100%;border-collapse:collapse}
 .more{border-top:1px solid var(--line);margin-top:28px;padding:12px 0}
 .more summary{font-weight:800;color:var(--navy);cursor:pointer}.mbody{color:var(--muted);max-width:900px}
 .foot{margin-top:30px;border-top:1px solid var(--line);padding:18px 0;color:var(--muted);font-size:.9rem}
-@media(max-width:880px){.hero,.layout{grid-template-columns:1fr}.bar{grid-template-columns:1fr 1fr}.sum{position:static}}
+.tools{display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap;margin:0 0 12px;font-size:.92rem}
+.signnote{margin:0;color:var(--ink)}.gst{display:flex;gap:6px;align-items:center;font-weight:600}.gst input{width:18px;height:18px;accent-color:var(--navy)}
+.linkbtn{font:inherit;font-size:.88rem;background:none;border:0;color:var(--navy);text-decoration:underline;cursor:pointer;padding:4px}
+.undo{background:var(--navy);color:#fff;border-radius:12px;padding:8px 14px;margin:0 0 12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.undo .btn.small{background:#fff;color:var(--navy);border-color:#fff}
+.warn{font-size:.86rem;color:var(--ink);background:#fff6f6;border-left:3px solid var(--red);padding:6px 10px;margin:10px 0}
+.pct{width:64px;font:inherit;font-size:.85rem;border:1.5px solid #c4cad6;border-radius:6px;padding:2px 4px;text-align:right}
+.sum .need{color:var(--red);font-weight:700;font-size:.82rem}
+.txwrap{min-width:0}
+@media(max-width:880px){.txwrap{overflow-x:auto}.hero,.layout{grid-template-columns:1fr}.bar{grid-template-columns:1fr 1fr}.sum{position:static}}
+@media(max-width:600px){.tx td,.tx th{font-size:.82rem;padding:5px 4px}.tx select{max-width:150px;font-size:.8rem}.tx td:first-child,.tx th:first-child{display:none}.tx td:nth-child(2){word-break:break-word}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
