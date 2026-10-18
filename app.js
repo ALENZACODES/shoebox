@@ -1,5 +1,6 @@
 import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.1";
-env.allowLocalModels = false;
+// The model files are served from this site (models/), not fetched from Hugging Face.
+env.allowLocalModels = true; env.allowRemoteModels = false; env.localModelPath = new URL("models/", location.href).href;
 const $ = id => document.getElementById(id);
 const fmt = n => "$" + n.toLocaleString("en-CA", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -42,7 +43,7 @@ async function run(text) {
   $("rows").innerHTML = `<tr><td colspan="4" class="loading">Sorting ${parsed.length} transactions on your device…</td></tr>`;
   try { await loadModel(); } catch (e) {
     embed = null; status("Model didn't load", "bad");
-    $("rows").innerHTML = `<tr><td colspan="4" class="loading">Shoebox couldn't download the model from Hugging Face (huggingface.co and cdn.jsdelivr.net). It needs to do that once, about 23 MB, and then your browser keeps a copy so it works offline. Check your connection or network filter and try again. Nothing from your file was sent anywhere.</td></tr>`;
+    $("rows").innerHTML = `<tr><td colspan="4" class="loading">Shoebox couldn't download the model. It needs to fetch the model (about 23 MB, from this site) and the runtime (from cdn.jsdelivr.net) once, and then your browser keeps a copy. Check your connection or network filter and try again. Nothing from your file was sent anywhere.</td></tr>`;
     say("The model couldn't be downloaded. Nothing from your file was sent."); return;
   }
   const vs = await vec(parsed.map(t => Logic.clean(t.desc)));

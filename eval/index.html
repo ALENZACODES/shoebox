@@ -2,11 +2,12 @@
 <html lang="en-CA"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Shoebox held-out check</title>
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../style.css"></head>
 <body><main class="wrap"><h1>Held-out check</h1>
-<p class="lede">Runs Shoebox's classifier and a plain keyword matcher over <a href="heldout.csv">heldout.csv</a>, 186 made-up transactions with the answer in a fourth column. The merchants were written after the hint phrases and the thresholds were not changed after seeing these results.</p>
+<p class="lede">Runs Shoebox's classifier and a plain keyword matcher over <a href="heldout.csv">heldout.csv</a>, 186 transactions I wrote and labelled myself, in the style of real bank exports, with the answer in a fourth column. They were written after the hint phrases, and the thresholds were not changed after seeing these results.</p>
 <p id="out" role="status">Loading the model…</p><table class="tx" id="t"></table></main>
 <script src="../lines.js"></script><script src="../logic.js"></script>
 <script type="module">
-import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.1";
+import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.1";
+env.allowLocalModels = true; env.allowRemoteModels = false; env.localModelPath = new URL("../models/", location.href).href;
 const csv = await (await fetch("heldout.csv")).text();
 const rows = csv.trim().split(/\r?\n/).slice(1).map(l => { const c = l.split(","); return { desc: c[1], truth: c[3].trim(), inflow: +c[2] > 0 }; });
 const emb = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2", { dtype: "q8" });
@@ -26,5 +27,5 @@ document.getElementById("t").innerHTML = `<thead><tr><th>Description</th><th>Ans
 const pc = n => Math.round(100 * n / rows.length) + "%";
 const res = { rows: rows.length, model: ok, keyword: kw, keywordNoMatch: kwNone, flagged, wrong, wrongFlagged };
 window.RESULT = res;
-document.getElementById("out").textContent = `Shoebox: ${ok} of ${rows.length} right (${pc(ok)}). Keyword matcher: ${kw} of ${rows.length} (${pc(kw)}), with no guess at all for ${kwNone}. Shoebox flagged ${flagged} rows, which caught ${wrongFlagged} of its ${wrong} mistakes.`;
+document.getElementById("out").textContent = `Shoebox: ${ok} of ${rows.length} right (${pc(ok)}). Keyword matcher: ${kw} of ${rows.length} (${pc(kw)}), with no guess at all for ${kwNone}. Shoebox flagged ${flagged} rows, which caught ${wrongFlagged} of its ${wrong} mistakes, so the ${rows.length - flagged} rows it didn't flag were right ${rows.length - flagged - (wrong - wrongFlagged)} times. The keyword matcher was right ${kw} of the ${rows.length - kwNone} times it guessed.`;
 </script></body></html>
