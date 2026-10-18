@@ -1,10 +1,12 @@
+![Shoebox: bank statement to T2125 lines, in your browser](assets/banner.png)
+
 # Shoebox
 
 Sort a year of bank transactions into Form T2125 expense lines without sending them anywhere.
 
 **Live demo:** https://alenzacodes.github.io/shoebox/
 
-![Shoebox with the sample statement loaded: transactions on the left, T2125 totals on the right](https://raw.githubusercontent.com/ALENZACODES/shoebox/main/assets/screenshot.png)
+![Shoebox with the sample statement loaded: transactions on the left, T2125 totals on the right](assets/screenshot-desktop.png)
 
 A freelancer gets to April with a bank export and no bookkeeping. Shoebox takes that CSV, puts each transaction on a Form T2125 expense line, flags the ones it isn't sure about, and learns from every fix. A small open-weight sentence model does the sorting inside your browser tab, so the statement never leaves your laptop. There's no server, no account and no upload.
 
